@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push: {}
+  pull_request: {}
+  schedule:
+    # 8AM first day of the month in JAN and JUNE to keep workflow badges up-to-date
+    - cron: "0 8 1 1,6 *"
+
+jobs:
+  feature-matrix:
+    uses: ./.github/workflows/feature-matrix.yaml
+
+  build:
+    name: build ${{ matrix.package.name }} (features ${{ matrix.package.features }})
+    runs-on: ubuntu-24.04
+    needs: [feature-matrix]
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.feature-matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-task@v2
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Compile binaries
+        run: >-
+          cargo build
+          --package "${{ matrix.package.name }}"
+          --features "${{ matrix.package.features }}"
+          --all-targets
