@@ -1,11 +1,13 @@
 [package]
 name = "safe-arithmetic"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2024"
 authors = ["romnn <contact@romnn.com>"]
-description = "traits for safe arithmetic operations in rust"
-license-file = "LICENSE"
+publish = true
+description = "Traits for safe arithmetic operations in rust"
+license = "MIT"
 readme = "README.md"
+documentation = "https://docs.rs/safe-arithmetic"
 homepage = "https://github.com/romnn/safe-arithmetic"
 repository = "https://github.com/romnn/safe-arithmetic"
 categories = [
@@ -18,14 +20,24 @@ keywords = [
   "casting",
 ]
 exclude = [
-  "tests/"
+  ".github",
+  ".typos.toml",
+  ".ignore",
+  ".bumpversion.toml",
+  "tests/",
+  "taskfile.yaml",
 ]
 
 [features]
 default = []
 
 [package.metadata.cargo-feature-combinations]
-denylist = ["default"]
+exclude_features = ["default"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+rustc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 num = "0"
