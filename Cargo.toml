@@ -1,6 +1,6 @@
 [package]
 name = "safe-arithmetic"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 authors = ["romnn <contact@romnn.com>"]
 publish = true
